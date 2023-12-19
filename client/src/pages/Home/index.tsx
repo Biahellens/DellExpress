@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrderTable } from '../../components'
+import { OrderTable, ImageCarousel } from '../../components'
 import { Content, ContentTable, Logo, LogoImage, Text } from './style'
 import logo from '../../assets/logo.svg'
 
@@ -10,6 +10,7 @@ function Home() {
       <Logo>
         <LogoImage src={logo}/>
       </Logo>
+      <ImageCarousel />
       <Content>
         <Text>Suas Entregas</Text>
         <ContentTable>

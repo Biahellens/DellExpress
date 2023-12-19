@@ -6,7 +6,6 @@ export const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
 `
 
 export const Logo = styled.div`
@@ -18,8 +17,9 @@ export const LogoImage = styled.img`
 `
 
 export const ContentTable = styled.div`
+  width:80%;
   margin-top: 20px;
-  width:80%
+  padding-bottom: 60px;
 `
 
 export const Text = styled.text`
