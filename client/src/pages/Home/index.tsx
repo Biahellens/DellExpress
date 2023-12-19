@@ -1,6 +1,6 @@
 import React from 'react';
 import { OrderTable } from '../../components'
-import { Content, ContentTable, Logo, LogoImage } from './style'
+import { Content, ContentTable, Logo, LogoImage, Text } from './style'
 import logo from '../../assets/logo.svg'
 
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
         <LogoImage src={logo}/>
       </Logo>
       <Content>
-        <p>Olá</p>
+        <Text>Suas Entregas</Text>
         <ContentTable>
           <OrderTable />
         </ContentTable>

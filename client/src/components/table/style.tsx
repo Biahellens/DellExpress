@@ -46,6 +46,7 @@ export const Th = styled.th<ThProps>`
   }};
   padding: 8px;
   text-align: left;
+  font-size: 20px;
 `
 
 export const Td = styled.td`
@@ -55,7 +56,7 @@ export const Td = styled.td`
 `
 
 export const Text = styled.text`
-  font-size: 18px;
+  font-size: 20px;
   margin: 10px;
 `
 

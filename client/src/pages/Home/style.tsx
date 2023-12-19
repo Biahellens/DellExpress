@@ -18,6 +18,12 @@ export const LogoImage = styled.img`
 `
 
 export const ContentTable = styled.div`
-  margin-top: 60px;
+  margin-top: 20px;
   width:80%
+`
+
+export const Text = styled.text`
+  width: 80%;
+  font-size: 24px;
+  margin: 10px;
 `
