@@ -47,20 +47,39 @@ export const Th = styled.th<ThProps>`
   padding: 8px;
   text-align: left;
   font-size: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `
 
 export const Td = styled.td`
   padding: 8px;
   text-align: left;
 
+  @media (max-width: 768px) {
+    padding: 2px;
+  }
 `
 
 export const Text = styled.text`
   font-size: 20px;
   margin: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    text-align: left;
+    margin: 4px;
+  }
 `
 
 export const Image = styled.img`
   width: 15px;
   height: 15px;
+
+  @media (max-width: 768px) {
+    width: 8px;
+    height: 8px;
+  }
+
 `

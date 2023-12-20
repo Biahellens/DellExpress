@@ -22,6 +22,11 @@ export const ContentBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 180px;
+    border-radius: 15px;
+  }
 `
 
 export const TextArea = styled.div`
@@ -44,4 +49,10 @@ export const Image = styled.img`
   width: 180px;
   height: 130px;
   margin-right: 20px;
+
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 80px;
+    margin-right: 10px;
+  }
 `
