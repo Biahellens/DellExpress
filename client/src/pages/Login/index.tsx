@@ -1,42 +1,44 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Content, ContentImage, Image, TextArea, FormContent, Input, Text, Button, BarOne, BarTwo, BarThree } from './style'
+import { Content, ContentText, ContentImage, LogoContent, LogoImage, Image, TextArea, FormContent, Input, Text, Button } from './style'
 
-import map  from '../../assets/image_60.svg'
+import logo from '../../assets/logo.svg'
 
 const Login = () => {
   const [email, setEmail] = useState('');
-  const [medicalPlan, setMedicalPlan] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
-    <div>
+    <>
       <Content>
-        <TextArea>
-          <Text>LOGIN</Text>
-          <form>
-            <FormContent>
-              <Input
-                type="email"
-                placeholder="E-mail"
-                value={email}
-              />
-              <Input
-                type="text"
-                placeholder="Plano Médico"
-                value={medicalPlan}
-              />
-            </FormContent>
-            <Button type="submit">Login</Button>
-          </form>
-        </TextArea>
         <ContentImage>
-          <Image src={map} />
-          <BarThree />
-          <BarTwo />
-          <BarOne />
+          <Image />
         </ContentImage>
+        <ContentText>
+          <LogoContent>
+            <LogoImage src={logo} />
+          </LogoContent>
+          <TextArea>
+            <Text>LOGIN</Text>
+            <form>
+              <FormContent>
+                <Input
+                  type="email"
+                  placeholder="E-mail"
+                  value={email}
+                />
+                <Input
+                  type="text"
+                  placeholder="Senha"
+                  value={password}
+                />
+              </FormContent>
+              <Button type="submit">Login</Button>
+            </form>
+          </TextArea>
+        </ContentText>
       </Content>
-    </div>
+    </>
   );
 };
 
