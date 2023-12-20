@@ -23,6 +23,11 @@ export const ModalContent = styled.div`
   display: relative;
   flex-flow: column;
   position: absolute;
+
+  @media (max-width: 768px) {
+    width: 280px;
+    height: 600px;
+  }
 `
 
 export const ModalHeader = styled.div`
@@ -80,24 +85,6 @@ export const Image = styled.img`
   width: 180px;
   height: 130px;
   margin-top: 10px;
-
-  @media (max-width: 768px) {
-    width: 120px;
-    height: 80px;
-    margin-right: 10px;
-  }
-`
-
-export const StatusImage = styled.img`
-  width: 15px;
-  height: 15px;
-  margin-right: 10px;
-
-  @media (max-width: 768px) {
-    width: 8px;
-    height: 8px;
-  }
-
 `
 
 export const CloseButton = styled.button`

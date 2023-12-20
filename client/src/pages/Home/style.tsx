@@ -20,6 +20,10 @@ export const ContentTable = styled.div`
   width:80%;
   margin-top: 20px;
   padding-bottom: 60px;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `
 
 export const Text = styled.text`

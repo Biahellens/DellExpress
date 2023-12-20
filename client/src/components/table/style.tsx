@@ -49,13 +49,14 @@ export const Th = styled.th<ThProps>`
   font-size: 20px;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `
 
 export const Td = styled.td`
   padding: 8px;
   text-align: left;
+
 
   @media (max-width: 768px) {
     padding: 2px;
@@ -67,8 +68,7 @@ export const Text = styled.text`
   margin: 10px;
 
   @media (max-width: 768px) {
-    font-size: 10px;
-    text-align: left;
+    font-size: 12px;
     margin: 4px;
   }
 `
