@@ -42,7 +42,7 @@ export const TextArea = styled.div`
 export const Text = styled.text<{$bold?: boolean}>`
   width: 100%;
   font-size: 20px;
-  font-weight: ${props => props.$bold ? 'bold' : ''};;
+  font-weight: ${props => props.$bold ? 'bold' : ''};
 `
 
 export const Image = styled.img`

@@ -1,0 +1,33 @@
+[
+  {
+    "id": 19823,
+    "customerName": "João Silva",
+    "address": "Rua Principal, 123",
+    "status": "Pedido Realizado"
+
+  },
+  {
+    "id": 22356,
+    "customerName": "Maria Oliveira",
+    "address": "Avenida Secundária, 456",
+    "status": "Pedido Aprovado"
+  },
+  {
+    "id": 31287,
+    "customerName": "Carlos Santos",
+    "address": "Praça Central, 789",
+    "status": "Pedido em Separação"
+  },
+  {
+    "id": 42345,
+    "customerName": "Ana Pereira",
+    "address": "Travessa do Comércio, 987",
+    "status": "Pedido Enviado"
+  },
+  {
+    "id": 50976,
+    "customerName": "Rafaela Souza",
+    "address": "Alameda dos Artistas, 654",
+    "status": "Pedido Entregue"
+  }
+]
