@@ -27,7 +27,7 @@ Para o desenvolvimento deste projeto, foi utilizado as seguintes tecnologias:
 
 ## Inicializando
 
-O projeto foi construido de estrutura de contêineres com o Docker, incluindo no mesmo um banco de dados PostgreSQL. O banco de dados foi salvo um backup dele para que seja realizada a vizualização deste projeto sem qualquer empecilho, e ao executar o Docker já é feita a restauração e a execução do mesmo.
+O projeto foi construido de estrutura de contêineres com o Docker, incluindo no mesmo um banco de dados PostgreSQL.
 
 ### Executando o container
 
