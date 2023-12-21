@@ -1,4 +1,4 @@
-![Hortinja](https://github.com/Biahellens/hortinja/blob/main/client/src/assets/Images/Logo.png?raw=true)
+![DellExpress](https://github.com/Biahellens/DellExpress/blob/main/client/public/logo.svg)
 
 # DellExpress
 
@@ -43,4 +43,32 @@ ou pode ser executado em background através do seguintes comando:
 $ docker-compose up --build -d
 ```
 
+### Criando o banco de dados:
+
+Para estar criando ou para atualizar o banco de dados usando o Prisma :
+
+```bash
+$ docker-compose exec prisma-migrate /bin/bash -c "npm install && npx prisma db push --preview-feature"
+```
+
+### Iniciando estrutura do banco de dados (migrate/seeds):
+
+```bash
+$ docker-compose exec nest-api /bin/bash -c "npm install && npm run start:dev"
+```
+
+### Iniciar o Front-end
+
+```bash
+$ docker-compose exec frontend /bin/bash -c "npm install && npm start"
+```
+
+### Executando a aplicação
+
+Agora com a aplicação configurada é possível acessa-la através da seguinte URL para ver se esta tudo certo:
+
+- http://localhost:3000/
+
+E poderá acessar a API em:
+- http://localhost:3001
 
