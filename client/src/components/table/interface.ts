@@ -1,8 +1,8 @@
 interface OrderData {
   id: number;
   customerName: string;
-  address: string;
-  status: string;
+  addressDelivery: string;
+  orderStatus: string;
 }
 
 export default OrderData

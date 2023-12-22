@@ -21,7 +21,8 @@ function OrderTable() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/orders') // Substitua pela sua URL da API
+        const response = await axios.get('http://localhost:8080/orders')
+        console.log('Dados dos pedidos:', response.data)
         setOrdersData(response.data)
       } catch (error) {
         console.error('Erro ao buscar dados dos pedidos:', error)
@@ -38,7 +39,8 @@ function OrderTable() {
 
   const fetchOrderDetails = async (orderId: number) => {
     try {
-      const response = await axios.get(`http://localhost:3000/orders/${orderId}`)
+      const response = await axios.get(`http://localhost:8080/orders/${orderId}`)
+      console.log(response)
       setOrderDetails(response.data)
       setIsModalOpen(true)
     } catch (error) {
@@ -56,7 +58,7 @@ function OrderTable() {
   }
 
   const getStatusImage = (order: OrderData) => {
-    const selectedStatusImage = statusImages[order.status] || received
+    const selectedStatusImage = statusImages[order.orderStatus] || received
     return selectedStatusImage
   }
 
@@ -89,11 +91,11 @@ function OrderTable() {
                 <Text>{order.customerName}</Text>
               </Td>
               <Td>
-                <Text>{order.address}</Text>
+                <Text>{order.addressDelivery}</Text>
               </Td>
               <Td>
-                <Image src={getStatusImage(order)} alt={order.status} />
-                <Text>{order.status}</Text>
+                <Image src={getStatusImage(order)} alt={order.orderStatus} />
+                <Text>{order.orderStatus}</Text>
               </Td>
             </Tr>
           ))}
