@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 // Componentes
 import { Content, Text, Table, Tbody, Thead, Td, Tr, Th, Image } from './style'
@@ -11,22 +12,38 @@ import separation from '../../assets/separation.svg'
 import sent from '../../assets/sent.svg'
 import delivered from '../../assets/delivered.svg'
 
-import ordersData from '../modal/content.json'
-import Order from '../modal/order'
+//import ordersData from '../modal/content.json'
+import OrderData from './interface'
 
 function OrderTable() {
+  const [ordersData, setOrdersData] = useState<OrderData[]>([])
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/orders') // Substitua pela sua URL da API
+        setOrdersData(response.data)
+      } catch (error) {
+        console.error('Erro ao buscar dados dos pedidos:', error)
+      }
+    }
+
+    fetchOrders()
+  }, [])
+
   // Responsável pelo controle do modal
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null)
+  const [orderDetails, setOrderDetails] = useState<OrderData | null>(null)
 
-  const openModal = (order: Order) => {
-    setSelectedOrder(order)
-    setIsModalOpen(true)
-  }
-
-  const closeModal = () => {
-    setSelectedOrder(null)
-    setIsModalOpen(false)
+  const fetchOrderDetails = async (orderId: number) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/orders/${orderId}`)
+      setOrderDetails(response.data)
+      setIsModalOpen(true)
+    } catch (error) {
+      console.error('Erro ao buscar detalhes do pedido:', error)
+    }
   }
 
   // Controla qual imagem aparece de acordo com o status do pedido
@@ -38,7 +55,7 @@ function OrderTable() {
     'Pedido Entregue': delivered,
   }
 
-  const getStatusImage = (order: Order) => {
+  const getStatusImage = (order: OrderData) => {
     const selectedStatusImage = statusImages[order.status] || received
     return selectedStatusImage
   }
@@ -64,7 +81,7 @@ function OrderTable() {
         </Thead>
         <Tbody>
           {ordersData.map((order) => (
-            <Tr key={order.id} onClick={() => openModal(order)}>
+            <Tr key={order.id} onClick={() => fetchOrderDetails(order.id)}>
               <Td>
                 <Text>{order.id}</Text>
               </Td>
@@ -83,7 +100,7 @@ function OrderTable() {
         </Tbody>
       </Table>
       {isModalOpen && (
-        <Modal order={selectedOrder} onClose={closeModal} />
+        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)} />
       )}
     </Content>
   )

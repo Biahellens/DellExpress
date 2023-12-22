@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import map from '../../assets/map.png'
+import map from '../../assets/image_60.svg'
 
 export const Content = styled.div`
   width: 100%;

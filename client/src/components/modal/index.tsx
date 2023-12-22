@@ -17,7 +17,7 @@ import {
 } from './style'
 import delivery from '../../assets/delivery.svg'
 
-import Order from './order'
+import Order from './interface'
 import { setOrderStatus } from './orderStatus/orderActions'
 
 interface ModalProps {

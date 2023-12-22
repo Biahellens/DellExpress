@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Content, ContentBackground, TextArea, Text, Image } from './style'
 
 import delivery from '../../assets/tracking.svg'
@@ -16,7 +16,7 @@ function ImageCarousel() {
       </ContentBackground>
     </Content>
 
-  );
+  )
 }
 
-export default ImageCarousel;
+export default ImageCarousel
