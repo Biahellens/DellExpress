@@ -12,7 +12,6 @@ import separation from '../../assets/separation.svg'
 import sent from '../../assets/sent.svg'
 import delivered from '../../assets/delivered.svg'
 
-//import ordersData from '../modal/content.json'
 import OrderData from './interface'
 
 function OrderTable() {

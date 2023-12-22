@@ -40,6 +40,8 @@ const Modal: React.FC<ModalProps & PropsFromRedux> = ({
     if (order) {
       setOrderStatus(order.id, newStatus)
     }
+
+    onClose()
   }
 
   return (
