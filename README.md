@@ -49,10 +49,28 @@ Em seguida precisamos iniciar o container do PostgreSQL:
 $ docker-compose up -d
 ```
 
-e configurar o nosso Prisma: 
+agora precisamos configurar o nosso Prisma e criar as tabelas no banco de dados: 
 
+- Caso peça o nome da migration, opte por 'dellexpress'
+  
 ```bash
 $ yarn prisma generate
+$ yarn prisma migrate dev
+```
+
+#### Inserindo dados:
+Para inserir dados a partir de dados ficticios apenas para uso prévio pe possível através do seguinte comando:
+
+```bash
+$ cd src
+$ cd addDados/insert.js
+$ node insert.js
+```
+
+Por fim podemos inicializar a nossa aplicação:
+
+```bash
+$ yarn start
 ```
 
 ### Iniciando o Front-end:
@@ -83,4 +101,5 @@ Agora com a aplicação configurada é possível acessa-la através da seguinte 
 
 E poderá acessar a API em:
 - http://localhost:8080/users
+- - http://localhost:8080/orders
 
