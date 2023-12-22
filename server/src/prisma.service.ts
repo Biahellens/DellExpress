@@ -14,6 +14,10 @@ export class PrismaService {
     return this.prisma.user;
   }
 
+  get order() {
+    return this.prisma.order;
+  }
+
   async disconnect() {
     await this.prisma.$disconnect();
   }
