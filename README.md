@@ -56,6 +56,7 @@ $ yarn prisma generate
 ```
 
 e criar as tabelas no banco de dados:
+  - Caso peça o nome da migration, opte por 'dellexpress'
 
 ```bash
 $ yarn prisma migrate dev
