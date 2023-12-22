@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpException, HttpStatus} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 
@@ -8,27 +8,75 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    try {
+      const user = await this.usersService.create(createUserDto);
+      return { id: user.id, email: user.email, name: user.name };
+    } catch (error) {
+      throw new HttpException('Não foi possível criar usuário', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    try {
+      const users = await this.usersService.findAll();
+      return users;
+    } catch (error) {
+      throw new HttpException('Não foi possível encontrar usuários', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Post('login')
+  async login(@Body() { email, password }: { email: string; password: string }) {
+    try {
+      const user = await this.usersService.validateUser(email, password);
+      if (user) {
+        return { message: 'Sucesso ao realizar login', user };
+      } else {
+        throw new HttpException('Credenciais Inválidas', HttpStatus.UNAUTHORIZED);
+      }
+    } catch (error) {
+      throw new HttpException('Não foi possível autenticar usuário', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  async findOne(@Param('id') id: number) {
+    try {
+      const user = await this.usersService.findOne(id);
+      if (!user) {
+        throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+      }
+      return user;
+    } catch (error) {
+      throw new HttpException('Não foi possível obter o usuário', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      const updatedUser = await this.usersService.update(id, updateUserDto);
+      if (!updatedUser) {
+        throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+      }
+      return { id: updatedUser.id, email: updatedUser.email, name: updatedUser.name };
+    } catch (error) {
+      throw new HttpException('Não foi possível atualizar o usuário', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.usersService.remove(id);
+  async remove(@Param('id') id: number) {
+    try {
+      const deletedUser = await this.usersService.remove(id);
+      if (!deletedUser) {
+        throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+      }
+      return { message: 'Usuário deletado com sucesso' };
+    } catch (error) {
+      throw new HttpException('Não foi possível deletar o usuário', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
