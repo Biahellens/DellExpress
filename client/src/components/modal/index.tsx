@@ -1,35 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
-
-// Componentes e imagem do projeto
-import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalHeaderId,
-  TextArea,
-  Text,
-  ModalBody,
-  Image,
-  CloseButton,
-  Select,
-  SelectOption
-} from './style'
+import { connect, ConnectedProps } from 'react-redux'
+import { ModalOverlay, ModalContent, ModalHeader, ModalHeaderId, TextArea, Text, ModalBody, Image, CloseButton, Select, SelectOption, Button } from './style'
 import delivery from '../../assets/delivery.svg'
-
 import Order from './interface'
 import { setOrderStatus } from './orderStatus/orderActions'
+import { RootState } from './orderStatus/store'
 
 interface ModalProps {
   order: Order | null
   onClose: () => void
-}
-
-// Responsavel pelo o status do pedido
-interface RootState {
-  order: {
-    selectedStatus: string
-  }
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -40,14 +19,24 @@ const mapDispatchToProps = {
   setOrderStatus,
 }
 
-const Modal: React.FC<ModalProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> = ({
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+const Modal: React.FC<ModalProps & PropsFromRedux> = ({
   order,
   onClose,
   selectedStatus,
   setOrderStatus,
 }) => {
+  const [newStatus, setNewStatus] = React.useState(selectedStatus)
+
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = event.target.value
+    const status = event.target.value
+    setNewStatus(status)
+  }
+
+  const handleSave = () => {
     if (order) {
       setOrderStatus(order.id, newStatus)
     }
@@ -71,18 +60,19 @@ const Modal: React.FC<ModalProps & ReturnType<typeof mapStateToProps> & typeof m
               </TextArea>
               <TextArea>
                 <Text $bold>Endereço:</Text>
-                <Text>{order.address}</Text>
+                <Text>{order.addressDelivery}</Text>
               </TextArea>
               <TextArea>
                 <Text $bold>Status:</Text>
-                <Select value={selectedStatus} onChange={handleStatusChange}>
-                  <SelectOption value="received">Pedido Recebido</SelectOption>
-                  <SelectOption value="approved">Pedido Aprovado</SelectOption>
-                  <SelectOption value="separation">Pedido em Separação</SelectOption>
-                  <SelectOption value="sent">Pedido Enviado</SelectOption>
-                  <SelectOption value="delivered">Pedido Entregue</SelectOption>
+                <Select value={newStatus} onChange={handleStatusChange}>
+                  <SelectOption value="Pedido Recebido">Pedido Recebido</SelectOption>
+                  <SelectOption value="Pedido Aprovado">Pedido Aprovado</SelectOption>
+                  <SelectOption value="Pedido em Separação">Pedido em Separação</SelectOption>
+                  <SelectOption value="Pedido Enviado">Pedido Enviado</SelectOption>
+                  <SelectOption value="Pedido Entregue">Pedido Entregue</SelectOption>
                 </Select>
               </TextArea>
+              <Button onClick={handleSave}>Salvar</Button>
             </ModalBody>
           </div>
         )}
@@ -92,4 +82,4 @@ const Modal: React.FC<ModalProps & ReturnType<typeof mapStateToProps> & typeof m
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+export default connector(Modal)

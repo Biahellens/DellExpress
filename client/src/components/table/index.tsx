@@ -34,7 +34,6 @@ function OrderTable() {
 
   // Responsável pelo controle do modal
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null)
   const [orderDetails, setOrderDetails] = useState<OrderData | null>(null)
 
   const fetchOrderDetails = async (orderId: number) => {

@@ -115,3 +115,15 @@ export const Select = styled.select`
 export const SelectOption = styled.option`
   font-size: 16px;
 `
+
+export const Button = styled.button`
+  margin-top: 10px;
+  width: 40%;
+  height: 40px;
+  background-color: #6B8E23;
+  color: #FFFFFF;
+  font-size:12px;
+  border: 2px solid #6B8E23;
+  border-radius: 20px;
+  cursor: pointer
+`
