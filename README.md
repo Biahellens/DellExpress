@@ -29,38 +29,50 @@ Para o desenvolvimento deste projeto, foi utilizado as seguintes tecnologias:
 
 O projeto foi construido de estrutura de contêineres com o Docker, incluindo no mesmo um banco de dados PostgreSQL.
 
-### Executando o container
+### Executando o container do server
 
-Com tudo configurado é possível estar subindo os contêineres para a aplicação estar no ar através do seguinte comando:
+Para iniciar o nosso server o primeiro passo é acessar a nossa pasta server:
 
 ```bash
-$ docker-compose up --build
+$ cd server
 ```
 
-ou pode ser executado em background através do seguintes comando:
+Instalar as dependências através do seguinte comando:
 
 ```bash
-$ docker-compose up --build -d
+$ yarn install
 ```
 
-### Criando o banco de dados:
-
-Para estar criando ou para atualizar o banco de dados usando o Prisma :
+Em seguida precisamos iniciar o container do PostgreSQL:
 
 ```bash
-$ docker-compose exec prisma-migrate /bin/bash -c "npm install && npx prisma db push --preview-feature"
+$ docker-compose up -d
 ```
 
-### Iniciando estrutura do banco de dados (migrate/seeds):
+e configurar o nosso Prisma: 
 
 ```bash
-$ docker-compose exec nest-api /bin/bash -c "npm install && npm run start:dev"
+$ yarn prisma generate
 ```
 
-### Iniciar o Front-end
+### Iniciando o Front-end:
+
+Para iniciar o nosso front-end o primeiro passo é acessar a nossa pasta client: 
 
 ```bash
-$ docker-compose exec frontend /bin/bash -c "npm install && npm start"
+$ cd client
+```
+
+Em seguida precisamos criar a nossa imagem através do seguinte comando:
+
+```bash
+$ docker build -t dellexpress-front .
+```
+
+e agora podemos iniciar o nosso contêiner:
+
+```bash
+$ docker run -p 3000:3000 dellexpress-front
 ```
 
 ### Executando a aplicação
@@ -70,5 +82,5 @@ Agora com a aplicação configurada é possível acessa-la através da seguinte 
 - http://localhost:3000/
 
 E poderá acessar a API em:
-- http://localhost:3001
+- http://localhost:8080/users
 
