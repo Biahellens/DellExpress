@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13
+    container_name: dellexpress-DB
+    environment:
+      POSTGRES_USER: dellexpress
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: dellexpressDB
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db-data:
