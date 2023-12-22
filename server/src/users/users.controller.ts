@@ -42,9 +42,10 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     try {
-      const user = await this.usersService.findOne(id);
+      const orderId = parseInt(id, 10);
+      const user = await this.usersService.findOne(orderId);
       if (!user) {
         throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
       }
@@ -55,9 +56,10 @@ export class UsersController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
-      const updatedUser = await this.usersService.update(id, updateUserDto);
+      const orderId = parseInt(id, 10);
+      const updatedUser = await this.usersService.update(orderId, updateUserDto);
       if (!updatedUser) {
         throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
       }
@@ -68,9 +70,10 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     try {
-      const deletedUser = await this.usersService.remove(id);
+      const orderId = parseInt(id, 10);
+      const deletedUser = await this.usersService.remove(orderId);
       if (!deletedUser) {
         throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
       }

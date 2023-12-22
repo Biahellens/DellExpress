@@ -28,9 +28,10 @@ export class OrdersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     try {
-      const order = await this.ordersService.findOne(id);
+      const orderId = parseInt(id, 10);
+      const order = await this.ordersService.findOne(orderId);
       if(!order) {
         throw new HttpException('Pedido não encontrado', HttpStatus.NOT_FOUND);
       }
@@ -41,9 +42,10 @@ export class OrdersController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateOrderDto: UpdateOrderDto) {
+  async update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     try {
-      const updateOrder = await this.ordersService.update(id, updateOrderDto);
+      const orderId = parseInt(id, 10);
+      const updateOrder = await this.ordersService.update(orderId, updateOrderDto);
       if(!updateOrder) {
         throw new HttpException('Pedido não encontrado', HttpStatus.NOT_FOUND);
       }
@@ -54,9 +56,10 @@ export class OrdersController {
   }
 
   @Put(':id/update-status')
-  async updateStatus(@Param('id') id: number, @Body('orderStatus') orderStatus: string) {
+  async updateStatus(@Param('id') id: string, @Body('orderStatus') orderStatus: string) {
     try {
-      const updateOrderStatus = await this.ordersService.updateStatus(id, orderStatus);
+      const orderId = parseInt(id, 10);
+      const updateOrderStatus = await this.ordersService.updateStatus(orderId, orderStatus);
       if(!updateOrderStatus) {
         throw new HttpException('Pedido não encontrado', HttpStatus.NOT_FOUND);
       }
@@ -67,9 +70,10 @@ export class OrdersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     try {
-      const deletedOrder = await this.ordersService.remove(id);
+      const orderId = parseInt(id, 10);
+      const deletedOrder = await this.ordersService.remove(orderId);
       if(!deletedOrder){
         throw new HttpException('Pedido não encontrado', HttpStatus.NOT_FOUND);
       }
