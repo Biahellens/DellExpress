@@ -49,10 +49,29 @@ Em seguida precisamos iniciar o container do PostgreSQL:
 $ docker-compose up -d
 ```
 
-e configurar o nosso Prisma: 
+agora precisamos configurar o nosso Prisma: 
 
 ```bash
 $ yarn prisma generate
+```
+
+e criar as tabelas no banco de dados:
+
+```bash
+$ yarn prisma migrate dev
+```
+
+iniciar nossa aplicação: 
+
+```bash
+$ yarn start
+```
+
+### Inserindo dados:
+Para inserir dados a partir de dados ficticios apenas para uso prévio pe possível através do seguinte comando:
+
+```bash
+$ node src/addDados/insert.js
 ```
 
 ### Iniciando o Front-end:
