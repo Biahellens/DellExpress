@@ -31,3 +31,14 @@ export const Text = styled.text`
   font-size: 24px;
   margin: 10px;
 `
+
+export const LoadingContent = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
+export const LoadingImage = styled.img`
+  width: 70%;
+  height: 70%;
+`
