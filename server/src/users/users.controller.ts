@@ -29,6 +29,7 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() { email, password }: { email: string; password: string }) {
+    console.log('Handling login request...');
     try {
       const user = await this.usersService.validateUser(email, password);
       if (user) {

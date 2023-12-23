@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   Content,
   ContentText,
@@ -14,6 +16,7 @@ import {
   Button,
 } from './style'
 import logo from '../../assets/logo.svg'
+import axios from 'axios'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -24,21 +27,20 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:3001/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('http://localhost:8080/users/login', {
+        email,
+        password,
       })
 
-      if (response.ok) {
+      if (response.data.user) {
         navigate('/')
       } else {
         console.error('Falha ao verificar autenticação')
+        toast.error('Senha ou e-mail incorretos')
       }
     } catch (error) {
       console.error('Ocorreu um erro durante a autenticação', error)
+      toast.error('Erro ao autenticar usuário. Tente novamente mais tarde.')
     }
   }
 
@@ -74,6 +76,7 @@ const Login = () => {
           </TextArea>
         </ContentText>
       </Content>
+      <ToastContainer />
     </>
   )
 }
