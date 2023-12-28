@@ -64,7 +64,7 @@ Para inserir dados a partir de dados ficticios apenas para uso prévio pe possí
 
 ```bash
 $ cd src
-$ cd addDados/insert.js
+$ cd addDados
 $ node insert.js
 ```
 
