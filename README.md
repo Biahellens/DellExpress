@@ -29,9 +29,9 @@ Para o desenvolvimento deste projeto, foi utilizado as seguintes tecnologias:
 
 O projeto foi construido de estrutura de contêineres com o Docker, incluindo no mesmo um banco de dados PostgreSQL.
 
-### Executando o container do server
+### Executando banco de dados
 
-Para iniciar o nosso server o primeiro passo é acessar a nossa pasta server:
+Para iniciar o nosso banco de dados o primeiro passo é acessar a nossa pasta server:
 
 ```bash
 $ cd server
@@ -59,38 +59,27 @@ $ yarn prisma migrate dev
 ```
 
 #### Inserindo dados:
+
 Para inserir dados a partir de dados ficticios apenas para uso prévio pe possível através do seguinte comando:
 
 ```bash
 $ cd src
-$ cd addDados/insert.js
+$ cd addDados
 $ node insert.js
 ```
 
-Por fim podemos inicializar a nossa aplicação:
+### Iniciando a aplicação
+
+Para iniciar a nossa aplicação precisamos apenas rodar o comando: 
 
 ```bash
-$ yarn start
+$ docker-compose up --build
 ```
 
-### Iniciando o Front-end:
-
-Para iniciar o nosso front-end o primeiro passo é acessar a nossa pasta client: 
+ou pode ser executado em background através do seguintes comando:
 
 ```bash
-$ cd client
-```
-
-Em seguida precisamos criar a nossa imagem através do seguinte comando:
-
-```bash
-$ docker build -t dellexpress-front .
-```
-
-e agora podemos iniciar o nosso contêiner:
-
-```bash
-$ docker run -p 3000:3000 dellexpress-front
+$ docker-compose up --build -d
 ```
 
 ### Executando a aplicação
@@ -101,5 +90,5 @@ Agora com a aplicação configurada é possível acessa-la através da seguinte 
 
 E poderá acessar a API em:
 - http://localhost:8080/users
-- - http://localhost:8080/orders
+- http://localhost:8080/orders
 
