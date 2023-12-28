@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
-import { Content, Text, Table, Tbody, Thead, Td, Tr, Th, Image } from './style'
 import Modal from '../modal'
-
+import { Content, Text, Table, Tbody, Thead, Td, Tr, Th, Image } from './style'
 import received from '../../assets/received.svg'
 import approved from '../../assets/approved.svg'
 import separation from '../../assets/separation.svg'
 import sent from '../../assets/sent.svg'
 import delivered from '../../assets/delivered.svg'
-
 import OrderData from './interface'
 
 function OrderTable() {
   const [ordersData, setOrdersData] = useState<OrderData[]>([])
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
   const handleOrderStatusChange = (orderId: number, newStatus: string) => {
     const updatedOrdersData = ordersData.map((order) =>
       order.id === orderId ? { ...order, orderStatus: newStatus } : order
-    );
-    setOrdersData(updatedOrdersData);
-  };
+    )
+    setOrdersData(updatedOrdersData)
+  }
+
+  const handleSort = () => {
+    const sortedOrders = [...ordersData].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.orderStatus.localeCompare(b.orderStatus)
+      } else {
+        return b.orderStatus.localeCompare(a.orderStatus)
+      }
+    })
+    setOrdersData(sortedOrders)
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+  }
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -68,7 +78,7 @@ function OrderTable() {
       <Table>
         <Thead>
           <Tr>
-            <Th  $size="small">
+            <Th $size="small">
               ID
             </Th>
             <Th $size="large">
@@ -77,7 +87,7 @@ function OrderTable() {
             <Th>
               ENDEREÇO
             </Th>
-            <Th $size="medium">
+            <Th $size="medium" onClick={handleSort} style={{ cursor: 'pointer' }}>
               STATUS
             </Th>
           </Tr>
@@ -103,7 +113,7 @@ function OrderTable() {
         </Tbody>
       </Table>
       {isModalOpen && (
-        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)}  onOrderStatusChange={handleOrderStatusChange}/>
+        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)} onOrderStatusChange={handleOrderStatusChange} />
       )}
     </Content>
   )
