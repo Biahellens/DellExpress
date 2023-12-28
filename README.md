@@ -29,9 +29,9 @@ Para o desenvolvimento deste projeto, foi utilizado as seguintes tecnologias:
 
 O projeto foi construido de estrutura de contêineres com o Docker, incluindo no mesmo um banco de dados PostgreSQL.
 
-### Executando banco de dados
+### Executando o container do server
 
-Para iniciar o nosso banco de dados o primeiro passo é acessar a nossa pasta server:
+Para iniciar o nosso server o primeiro passo é acessar a nossa pasta server:
 
 ```bash
 $ cd server
@@ -64,22 +64,34 @@ Para inserir dados a partir de dados ficticios apenas para uso prévio pe possí
 
 ```bash
 $ cd src
-$ cd addDados
+$ cd addDados/insert.js
 $ node insert.js
 ```
 
-### Iniciando a aplicação
-
-Para iniciar a nossa aplicação precisamos apenas rodar o comando: 
+Por fim podemos inicializar a nossa aplicação:
 
 ```bash
-$ docker-compose up --build
+$ yarn start
 ```
 
-ou pode ser executado em background através do seguintes comando:
+### Iniciando o Front-end:
+
+Para iniciar o nosso front-end o primeiro passo é acessar a nossa pasta client: 
 
 ```bash
-$ docker-compose up --build -d
+$ cd client
+```
+
+Em seguida precisamos criar a nossa imagem através do seguinte comando:
+
+```bash
+$ docker build -t dellexpress-front .
+```
+
+e agora podemos iniciar o nosso contêiner:
+
+```bash
+$ docker run -p 3000:3000 dellexpress-front
 ```
 
 ### Executando a aplicação
@@ -91,4 +103,3 @@ Agora com a aplicação configurada é possível acessa-la através da seguinte 
 E poderá acessar a API em:
 - http://localhost:8080/users
 - http://localhost:8080/orders
-
