@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-// Componentes
 import { Content, Text, Table, Tbody, Thead, Td, Tr, Th, Image } from './style'
 import Modal from '../modal'
 
-// Imagens
 import received from '../../assets/received.svg'
 import approved from '../../assets/approved.svg'
 import separation from '../../assets/separation.svg'
@@ -16,6 +14,13 @@ import OrderData from './interface'
 
 function OrderTable() {
   const [ordersData, setOrdersData] = useState<OrderData[]>([])
+
+  const handleOrderStatusChange = (orderId: number, newStatus: string) => {
+    const updatedOrdersData = ordersData.map((order) =>
+      order.id === orderId ? { ...order, orderStatus: newStatus } : order
+    );
+    setOrdersData(updatedOrdersData);
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -31,7 +36,6 @@ function OrderTable() {
     fetchOrders()
   }, [])
 
-  // Responsável pelo controle do modal
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [orderDetails, setOrderDetails] = useState<OrderData | null>(null)
 
@@ -46,7 +50,6 @@ function OrderTable() {
     }
   }
 
-  // Controla qual imagem aparece de acordo com o status do pedido
   const statusImages: Record<string, string> = {
     'Pedido Recebido': received,
     'Pedido Aprovado': approved,
@@ -100,7 +103,7 @@ function OrderTable() {
         </Tbody>
       </Table>
       {isModalOpen && (
-        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)} />
+        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)}  onOrderStatusChange={handleOrderStatusChange}/>
       )}
     </Content>
   )

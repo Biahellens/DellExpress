@@ -2,14 +2,9 @@ import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { ModalOverlay, ModalContent, ModalHeader, ModalHeaderId, TextArea, Text, ModalBody, Image, CloseButton, Select, SelectOption, Button } from './style'
 import delivery from '../../assets/delivery.svg'
-import Order from './interface'
+import { Order} from './interface'
 import { setOrderStatus } from './orderStatus/orderActions'
 import { RootState } from './orderStatus/store'
-
-interface ModalProps {
-  order: Order | null
-  onClose: () => void
-}
 
 const mapStateToProps = (state: RootState) => ({
   selectedStatus: state.order.selectedStatus,
@@ -17,6 +12,12 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
   setOrderStatus,
+}
+
+interface ModalProps {
+  order: Order | null;
+  onClose: () => void;
+  onOrderStatusChange: (orderId: number, newStatus: string) => void;
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -28,6 +29,7 @@ const Modal: React.FC<ModalProps & PropsFromRedux> = ({
   onClose,
   selectedStatus,
   setOrderStatus,
+  onOrderStatusChange,
 }) => {
   const [newStatus, setNewStatus] = React.useState(selectedStatus)
 
@@ -39,6 +41,7 @@ const Modal: React.FC<ModalProps & PropsFromRedux> = ({
   const handleSave = () => {
     if (order) {
       setOrderStatus(order.id, newStatus)
+      onOrderStatusChange(order.id, newStatus)
     }
 
     onClose()
