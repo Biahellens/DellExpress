@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   ModalOverlay,
   ModalContent,
@@ -15,7 +15,8 @@ import {
   ButtonContent
 } from './style'
 
-import delivery from '../../assets/delivery.svg'
+import delivery from '../../assets/delivery.svg';
+import axios from "axios";
 
 interface ModalProps {
   onClose: () => void;
@@ -24,8 +25,22 @@ interface ModalProps {
 const NewOrder: React.FC<ModalProps> = ({
   onClose
 }) => {
+  const [customerName, setCustomerName] = useState('');
+  const [addressDelivery, setAddressDelivery] = useState('');
+  const orderStatus = 'Pedido Realizado'
 
-  const handleSave = () => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try{
+      const response = await axios.post('http://localhost:8080/orders', {
+        customerName,
+        addressDelivery,
+        orderStatus
+      })
+    } catch(error){
+
+    }
     onClose()
   }
 
@@ -40,19 +55,29 @@ const NewOrder: React.FC<ModalProps> = ({
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <FormContent>
+            <FormContent onSubmit={handleSave}>
               <TextArea>
                 <Text>Nome Completo(Destinário):</Text>
               </TextArea>
-              <Input />
+              <Input
+                type='text'
+                placeholder="Nome Destinário"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
               <TextArea>
-                <Text>Endereço:</Text>
+                <Text>Endereço da Entrega:</Text>
               </TextArea>
-              <Input />
+              <Input
+                type='text'
+                placeholder="Endereço "
+                value={addressDelivery}
+                onChange={(e) => setAddressDelivery(e.target.value)}
+              />
+              <ButtonContent>
+                <Button type="submit">Salvar</Button>
+              </ButtonContent>
             </FormContent>
-            <ButtonContent>
-              <Button onClick={handleSave}>Salvar</Button>
-            </ButtonContent>
           </ModalBody>
         </>
         <CloseButton onClick={onClose}>X</CloseButton>

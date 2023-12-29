@@ -61,7 +61,7 @@ function OrderTable() {
   }
 
   const statusImages: Record<string, string> = {
-    'Pedido Recebido': received,
+    'Pedido Realizado': received,
     'Pedido Aprovado': approved,
     'Pedido em Separação': separation,
     'Pedido Enviado': sent,

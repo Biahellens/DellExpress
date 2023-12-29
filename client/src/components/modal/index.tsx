@@ -70,7 +70,7 @@ const Modal: React.FC<ModalProps & PropsFromRedux> = ({
               <TextArea>
                 <Text $bold>Status:</Text>
                 <Select value={newStatus} onChange={handleStatusChange}>
-                  <SelectOption value="Pedido Recebido">Pedido Recebido</SelectOption>
+                  <SelectOption value="Pedido Realizado">Pedido Realizado</SelectOption>
                   <SelectOption value="Pedido Aprovado">Pedido Aprovado</SelectOption>
                   <SelectOption value="Pedido em Separação">Pedido em Separação</SelectOption>
                   <SelectOption value="Pedido Enviado">Pedido Enviado</SelectOption>
