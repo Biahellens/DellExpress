@@ -16,6 +16,16 @@ export const LogoImage = styled.img`
   width: 180px;
 `
 
+export const ContentHeader = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
+`
+
 export const ContentTable = styled.div`
   width:80%;
   margin-top: 20px;
@@ -41,4 +51,16 @@ export const LoadingContent = styled.div`
 export const LoadingImage = styled.img`
   width: 70%;
   height: 70%;
+`
+
+export const ButtonNew = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #9ACD32;
+
+  color: #F8F7F7;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
 `
