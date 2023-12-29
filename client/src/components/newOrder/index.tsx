@@ -1,5 +1,19 @@
 import React from "react"
-import { ModalOverlay, ModalContent, Button, CloseButton, Image, ModalBody, ModalHeader, ModalTitle, Text, TextArea } from './style'
+import {
+  ModalOverlay,
+  ModalContent,
+  Button,
+  CloseButton,
+  Image,
+  ModalBody,
+  ModalHeader,
+  ModalTitle,
+  Text,
+  TextArea,
+  FormContent,
+  Input,
+  ButtonContent
+} from './style'
 
 import delivery from '../../assets/delivery.svg'
 
@@ -11,6 +25,10 @@ const NewOrder: React.FC<ModalProps> = ({
   onClose
 }) => {
 
+  const handleSave = () => {
+    onClose()
+  }
+
   return(
     <ModalOverlay>
       <ModalContent>
@@ -18,13 +36,23 @@ const NewOrder: React.FC<ModalProps> = ({
           <ModalHeader>
             <Image src={delivery}/>
             <ModalTitle>
-              <Text $bold>Adicionar novo Pedido</Text>
+              <Text $bold>Adicionar Nova Entrega</Text>
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <TextArea>
-              <Text>oi</Text>
-            </TextArea>
+            <FormContent>
+              <TextArea>
+                <Text>Nome Completo(Destinário):</Text>
+              </TextArea>
+              <Input />
+              <TextArea>
+                <Text>Endereço:</Text>
+              </TextArea>
+              <Input />
+            </FormContent>
+            <ButtonContent>
+              <Button onClick={handleSave}>Salvar</Button>
+            </ButtonContent>
           </ModalBody>
         </>
         <CloseButton onClick={onClose}>X</CloseButton>

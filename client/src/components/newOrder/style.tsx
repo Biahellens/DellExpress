@@ -64,13 +64,14 @@ export const Text = styled.text<{$bold?: boolean}>`
 `
 
 export const TextArea = styled.div`
-  height: 60px;
+  height: 40px;
+  margin-top: 20px;
   display: flex;
   flex-flow: column;
 `
 
 export const ModalBody = styled.div`
-  width: 80%;
+  width: 100%;
   height: auto;
 
   margin-top: 40px;
@@ -99,8 +100,14 @@ export const CloseButton = styled.button`
   outline: none;
 `
 
+export const ButtonContent = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
 export const Button = styled.button`
-  margin-top: 10px;
+  margin-top: 20px;
   width: 40%;
   height: 40px;
   background-color: #6B8E23;
@@ -109,4 +116,22 @@ export const Button = styled.button`
   border: 2px solid #6B8E23;
   border-radius: 20px;
   cursor: pointer
+`
+
+export const FormContent = styled.form`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column;
+`
+
+export const Input = styled.input<{ $size?: boolean; }>`
+  width: 100%;
+  height: 30px;
+  background-color: #FFFFFF;
+  border: 2px solid #6B8E23;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: start;
+  font-size: 12px;
 `
