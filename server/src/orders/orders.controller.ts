@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderDto } from './order.dto';
 
@@ -24,6 +24,20 @@ export class OrdersController {
       return orders
     } catch (error) {
       throw new HttpException('Não foi possível encontrar pedidos', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get('status/:orderStatus')
+  async findByStatus(@Param('orderStatus') orderStatus: string) {
+    try {
+      const orders = await this.ordersService.findByStatus(orderStatus);
+      return orders;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      } else {
+        throw new HttpException('Não foi possível encontrar pedidos com o status especificado', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   }
 

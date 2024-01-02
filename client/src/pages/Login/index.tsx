@@ -96,6 +96,4 @@ const Login = () => {
 }
 
 export default Login
-function setIsAuthenticated(arg0: boolean) {
-  throw new Error('Function not implemented.')
-}
+

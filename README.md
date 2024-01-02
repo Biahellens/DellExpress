@@ -59,11 +59,12 @@ $ yarn prisma migrate dev
 ```
 
 #### Inserindo dados:
+
 Para inserir dados a partir de dados ficticios apenas para uso prévio pe possível através do seguinte comando:
 
 ```bash
 $ cd src
-$ cd addDados/insert.js
+$ cd addDados
 $ node insert.js
 ```
 
@@ -101,5 +102,4 @@ Agora com a aplicação configurada é possível acessa-la através da seguinte 
 
 E poderá acessar a API em:
 - http://localhost:8080/users
-- - http://localhost:8080/orders
-
+- http://localhost:8080/orders

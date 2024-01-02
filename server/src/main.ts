@@ -12,6 +12,11 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
   });
 
+  app.use((req, res, next) => {
+    console.log('Request received:', req.url);
+    next();
+  });
+
   await app.listen(8080);
 }
 

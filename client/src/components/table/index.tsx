@@ -1,27 +1,66 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
-// Componentes
-import { Content, Text, Table, Tbody, Thead, Td, Tr, Th, Image } from './style'
 import Modal from '../modal'
-
-// Imagens
+import {
+  Content,
+  Text,
+  Table,
+  Tbody,
+  Thead,
+  Td,
+  Tr,
+  Th,
+  Image,
+  PaginationButton,
+  ContentPagination,
+  TextPagination
+} from './style'
 import received from '../../assets/received.svg'
 import approved from '../../assets/approved.svg'
 import separation from '../../assets/separation.svg'
 import sent from '../../assets/sent.svg'
 import delivered from '../../assets/delivered.svg'
-
 import OrderData from './interface'
 
-function OrderTable() {
+interface OrderTableProps {
+  selectedStatus: string
+}
+
+function OrderTable({ selectedStatus }: OrderTableProps) {
   const [ordersData, setOrdersData] = useState<OrderData[]>([])
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
+
+  const handleOrderStatusChange = (orderId: number, newStatus: string) => {
+    const updatedOrdersData = ordersData.map((order) =>
+      order.id === orderId ? { ...order, orderStatus: newStatus } : order
+    )
+    setOrdersData(updatedOrdersData)
+  }
+
+  const handleSort = () => {
+    const sortedOrders = [...ordersData].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.orderStatus.localeCompare(b.orderStatus)
+      } else {
+        return b.orderStatus.localeCompare(a.orderStatus)
+      }
+    })
+    setOrdersData(sortedOrders)
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+  }
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/orders')
-        console.log('Dados dos pedidos:', response.data)
+        let url = 'http://localhost:8080/orders'
+
+        if (selectedStatus && selectedStatus !== 'all') {
+          url += `/status/${encodeURIComponent(selectedStatus)}`
+        }
+
+        const response = await axios.get(url)
         setOrdersData(response.data)
       } catch (error) {
         console.error('Erro ao buscar dados dos pedidos:', error)
@@ -29,16 +68,19 @@ function OrderTable() {
     }
 
     fetchOrders()
-  }, [])
+  }, [selectedStatus])
 
-  // Responsável pelo controle do modal
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentOrders = ordersData.slice(indexOfFirstItem, indexOfLastItem)
+  const totalPages = Math.ceil(ordersData.length / itemsPerPage)
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [orderDetails, setOrderDetails] = useState<OrderData | null>(null)
 
   const fetchOrderDetails = async (orderId: number) => {
     try {
       const response = await axios.get(`http://localhost:8080/orders/${orderId}`)
-      console.log(response)
       setOrderDetails(response.data)
       setIsModalOpen(true)
     } catch (error) {
@@ -46,9 +88,8 @@ function OrderTable() {
     }
   }
 
-  // Controla qual imagem aparece de acordo com o status do pedido
   const statusImages: Record<string, string> = {
-    'Pedido Recebido': received,
+    'Pedido Realizado': received,
     'Pedido Aprovado': approved,
     'Pedido em Separação': separation,
     'Pedido Enviado': sent,
@@ -60,27 +101,44 @@ function OrderTable() {
     return selectedStatusImage
   }
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        let url = 'http://localhost:8080/orders'
+
+        if (selectedStatus && selectedStatus !== 'all') {
+          url += `/status/${encodeURIComponent(selectedStatus)}`
+        }
+
+        const response = await axios.get(url)
+        setOrdersData(response.data)
+      } catch (error) {
+        console.error('Erro ao buscar dados dos pedidos:', error)
+      }
+    }
+
+    fetchOrders()
+  }, [selectedStatus])
+
   return (
     <Content>
       <Table>
         <Thead>
           <Tr>
-            <Th  $size="small">
-              ID
-            </Th>
-            <Th $size="large">
-              NOME DO CLIENTE
-            </Th>
-            <Th>
-              ENDEREÇO
-            </Th>
-            <Th $size="medium">
+            <Th $size="small">ID</Th>
+            <Th $size="large">NOME DO CLIENTE</Th>
+            <Th>ENDEREÇO</Th>
+            <Th $size="medium" onClick={handleSort} style={{ cursor: 'pointer' }}>
               STATUS
             </Th>
           </Tr>
         </Thead>
         <Tbody>
-          {ordersData.map((order) => (
+          {currentOrders.map((order) => (
             <Tr key={order.id} onClick={() => fetchOrderDetails(order.id)}>
               <Td>
                 <Text>{order.id}</Text>
@@ -99,8 +157,19 @@ function OrderTable() {
           ))}
         </Tbody>
       </Table>
+
+      <ContentPagination>
+        <PaginationButton onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          Anterior
+        </PaginationButton>
+        <TextPagination>Página {currentPage} de {totalPages}</TextPagination>
+        <PaginationButton onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastItem >= ordersData.length}>
+          Próxima
+        </PaginationButton>
+      </ContentPagination>
+
       {isModalOpen && (
-        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)} />
+        <Modal order={orderDetails} onClose={() => setIsModalOpen(false)} onOrderStatusChange={handleOrderStatusChange} />
       )}
     </Content>
   )
