@@ -22,7 +22,11 @@ import sent from '../../assets/sent.svg'
 import delivered from '../../assets/delivered.svg'
 import OrderData from './interface'
 
-function OrderTable() {
+interface OrderTableProps {
+  selectedStatus: string
+}
+
+function OrderTable({ selectedStatus }: OrderTableProps) {
   const [ordersData, setOrdersData] = useState<OrderData[]>([])
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const [currentPage, setCurrentPage] = useState(1)
@@ -50,7 +54,13 @@ function OrderTable() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/orders')
+        let url = 'http://localhost:8080/orders'
+
+        if (selectedStatus && selectedStatus !== 'all') {
+          url += `/status/${encodeURIComponent(selectedStatus)}`
+        }
+
+        const response = await axios.get(url)
         setOrdersData(response.data)
       } catch (error) {
         console.error('Erro ao buscar dados dos pedidos:', error)
@@ -58,7 +68,7 @@ function OrderTable() {
     }
 
     fetchOrders()
-  }, [])
+  }, [selectedStatus])
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -94,6 +104,25 @@ function OrderTable() {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
   }
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        let url = 'http://localhost:8080/orders'
+
+        if (selectedStatus && selectedStatus !== 'all') {
+          url += `/status/${encodeURIComponent(selectedStatus)}`
+        }
+
+        const response = await axios.get(url)
+        setOrdersData(response.data)
+      } catch (error) {
+        console.error('Erro ao buscar dados dos pedidos:', error)
+      }
+    }
+
+    fetchOrders()
+  }, [selectedStatus])
 
   return (
     <Content>

@@ -22,6 +22,12 @@ export class OrdersService {
     });
   }
 
+  async findByStatus(orderStatus: string) {
+    return this.prisma.order.findMany({
+      where: { orderStatus },
+    });
+  }
+
   async update(id: number, updateorderDto: UpdateOrderDto) {
     return this.prisma.order.update({
       where: { id },
