@@ -83,3 +83,26 @@ export const Image = styled.img`
   }
 
 `
+
+export const ContentPagination = styled.div`
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  align-items: center;
+`
+
+export const TextPagination = styled.text`
+  font-size: 14px;
+  padding: 0 6px 0 6px
+`
+
+export const PaginationButton = styled.button`
+  width: 100px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #FF8C00;
+  color: #FFFFFF
+
+`
